@@ -1,26 +1,14 @@
 #include  <SFML/Graphics.hpp> 
-int main()
+#include "FlappyBirds.h"
+#include <iostream>
+#include "Obstacol.h"
+int main()//masina de stari si starile si input-ul fac parte din motorul jocului
 {
-    sf::RenderWindow window(sf::VideoMode(1024, 1024), "Flappy burb");
+    srand(static_cast<unsigned>(0));
+    FlappyBirds game;
+    Obstacol x;  
+       
+     game.ruleaza();
 
-    sf::Event event;
-
-    while (window.isOpen()) {
-        window.clear();
-        
-        
-        window.close();
-        
-        /*
-
-        while (window.pollEvent(event)) {
-
-            if (event.type == sf::Event::Closed) {
-
-                window.close();
-            }
-        }*/
-    }
-
-    return 0;
+    return 1;
 }

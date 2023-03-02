@@ -1,0 +1,32 @@
+#pragma once
+#include "Obstacol.h"
+#include "DefaultPawn.h"
+#include <iostream>
+class FlappyBirds
+{
+
+private:
+	float SpawnCooldMax=10.f;
+	float SpawnCoold=SpawnCooldMax;
+	std::vector<Obstacol*> obstacole;
+	DefaultPawn *jucator = new DefaultPawn();
+public:
+	void updateObstacole();
+	void updateInput();
+	void EventsUpdate();
+	void updateJucator();
+	void deseneazaFrame();
+	void initFereastra();
+	void deseneazaInamici();
+	sf::RenderWindow* fereastra;// = new sf::RenderWindow(sf::VideoMode(800, 600), "flappy burb", sf::Style::Close | sf::Style::Titlebar);
+	FlappyBirds();
+	~FlappyBirds();
+	void ruleaza();//updateaza si deseneaza
+	void SpawneazaObstacole();
+	void updateColision();
+	
+	
+	void IntersectieActor();
+	void StergeObstacole();
+};
+

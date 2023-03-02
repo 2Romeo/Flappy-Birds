@@ -139,7 +139,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DefaultPawn.cpp" />
+    <ClCompile Include="FlappyBirds.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Obstacol.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DefaultPawn.h" />
+    <ClInclude Include="FlappyBirds.h" />
+    <ClInclude Include="Obstacol.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
