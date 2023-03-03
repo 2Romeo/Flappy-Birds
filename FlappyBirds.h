@@ -12,8 +12,15 @@ private:
 	DefaultPawn *jucator = new DefaultPawn();
 	sf::Text GameOverText;
 	sf::Font GameOverFont;
+	sf::Sprite Background;
+	sf::Texture texturaBackground;
+	std::vector<Background*> backgrounds
 public:
-	bool updateObstacole();
+	void deseneazaBackground();
+	void moveBackground();
+	void initBackground();
+	void updateObstacole();
+	bool coliziuniObstacole();
 	void initGameOverText();
 	//void updateObstacole();
 	void updateInput();

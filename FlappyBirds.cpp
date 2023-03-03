@@ -1,6 +1,58 @@
 #include "FlappyBirds.h"
 #include <SFML/Graphics.hpp>
 
+FlappyBirds::FlappyBirds()
+{
+	
+	jucator->initPawn();
+	initFereastra();
+	initBackground();
+	initGameOverText();
+}
+
+
+FlappyBirds::~FlappyBirds()
+{
+	for (auto* i : obstacole)
+	{
+		delete i;
+	}
+}
+
+void FlappyBirds::ruleaza()
+{
+	while (fereastra->isOpen()) {
+		if (coliziuniObstacole() == false)
+		{
+			updateObstacole();
+			updateColision();
+			updateInput();
+			EventsUpdate();
+			jucator->gravitate();
+			StergeObstacole();
+			deseneazaFrame();
+		}
+		else
+		{
+			fereastra->draw(GameOverText);
+			fereastra->display();
+		}
+	}
+
+}
+
+void FlappyBirds::deseneazaFrame()
+{
+
+	fereastra->clear();
+	deseneazaBackground();
+	for (auto* i : obstacole)
+	{
+		i->deseneazaObstacol(fereastra);
+	}
+	jucator->deseneazaJucator(fereastra);
+	fereastra->display();
+}
 
 
 void FlappyBirds::initGameOverText()
@@ -21,27 +73,52 @@ void FlappyBirds::initGameOverText()
 	}
 }
 
-bool FlappyBirds::updateObstacole()
+void FlappyBirds::deseneazaBackground()
+{
+	moveBackground();
+	fereastra->draw(Background);
+}
+
+void FlappyBirds::moveBackground()
+{
+	Background.move(-1.f, 0.f);
+}
+
+void FlappyBirds::initBackground()
+{
+	if (texturaBackground.loadFromFile("Texturi/background.png") == false)
+		std::cout << "load texture failed \n";
+	else
+	{
+		Background.setTexture(texturaBackground);
+		Background.setPosition(0.f, 0.f);
+		Background.setScale(0.8f, 0.8f);
+	}
+}
+
+void FlappyBirds::updateObstacole()
 {
 	SpawneazaObstacole();
 	for (auto* i : obstacole)
-	{
 		i->miscaObstacol();
 
-	if(i->getUpperBounds().contains(jucator->getMargini().left+jucator->getMargini().width,jucator->getMargini().top))//left==jucator->getMargini().left+jucator->getMargini().width)
-			{
-		return true;
-		fereastra->draw(GameOverText);
-			}
-	if (i->getLowerBounds().contains(jucator->getMargini().left + jucator->getMargini().width, jucator->getMargini().top + jucator->getMargini().width))
-			{
-		return true;
-				fereastra->draw(GameOverText);
-			}
-
+}
+bool FlappyBirds::coliziuniObstacole()
+{
+	for (auto* i : obstacole)
+	{
+		if (i->getUpperBounds().contains(jucator->getMargini().left + jucator->getMargini().width, jucator->getMargini().top))//left==jucator->getMargini().left+jucator->getMargini().width)
+		{
+			return true;
+			fereastra->draw(GameOverText);
+		}
+		if (i->getLowerBounds().contains(jucator->getMargini().left + jucator->getMargini().width, jucator->getMargini().top + jucator->getMargini().width))
+		{
+			return true;
+			fereastra->draw(GameOverText);
+		}
 	}
 	return false;
-
 }
 void FlappyBirds::updateInput()
 {
@@ -67,61 +144,11 @@ void FlappyBirds::updateJucator()
 	jucator->updateJucator();
 }
 
-void FlappyBirds::deseneazaFrame()
-{
-	fereastra->clear();
-	for (auto* i : obstacole)
-	{
-		i->deseneazaObstacol(fereastra);
-	}
-	jucator->deseneazaJucator(fereastra);
-	if (updateObstacole())
-		fereastra->draw(GameOverText);
-	fereastra->display();
-}
-
 void FlappyBirds::initFereastra()
 {
 	fereastra = new sf::RenderWindow(sf::VideoMode(800, 600), "flappy burb", sf::Style::Close | sf::Style::Titlebar);
 	fereastra->setFramerateLimit(120);
 	fereastra->setVerticalSyncEnabled(0);
-}
-
-FlappyBirds::FlappyBirds()
-{
-	jucator->initPawn();
-	initFereastra();
-	initGameOverText();
-}
-
-
-FlappyBirds::~FlappyBirds()
-{
-	for (auto* i : obstacole)
-	{
-		delete i;
-	}
-}
-
-void FlappyBirds::ruleaza()
-{
-	while (fereastra->isOpen()) {
-		if (updateObstacole() == false)
-		{
-			updateColision();
-			updateInput();
-			EventsUpdate();
-			jucator->gravitate();
-			StergeObstacole();
-			deseneazaFrame();
-		}
-		else
-		{
-			fereastra->draw(GameOverText);
-			fereastra->display();
-		}
-	}
-	
 }
 
 void FlappyBirds::updateColision()
@@ -135,17 +162,7 @@ void FlappyBirds::updateColision()
 		jucator->setPozitie(jucator->getMargini().left, fereastra->getSize().y - jucator->getMargini().height);//marginea din dreapta a ferestrei - latimea obiectului = marginea din dreapta suprapusa cu marginea din dreapta a ferestre,
 
 }
-//void FlappyBirds::IntersectieActor()
-//{
-//	for (int i = 0; i < obstacole.size(); ++i)
-//		if (obstacole[i]->getMargini().intersects(jucator->getMargini()))
-//			/*if(obstacole[i]->getLowerBounds() <= jucator->getPoz().y
-//				||obstacole[i]->getUpperBounds() >= jucator->getPoz().y)*/
-//						return true;
-//				else
-//				return false;
-//			std::cout << " intersect" << i <<" \n\n\n\n";
-//}
+
 void FlappyBirds::StergeObstacole() 
 {
 	int aux = 0;
