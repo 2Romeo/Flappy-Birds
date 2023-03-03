@@ -3,7 +3,25 @@
 
 
 
-void FlappyBirds::updateObstacole()
+void FlappyBirds::initGameOverText()
+{
+	if(this->GameOverFont.loadFromFile("Font/LeagueSpartan-Bold.otf")==false)
+		std::cout << "font error not loaded\n";
+	else
+	{
+		GameOverText.setFont(GameOverFont);
+		GameOverText.setCharacterSize(70);
+		GameOverText.setFillColor(sf::Color::Red);
+		GameOverText.setString("GAME OVER Romeo");
+		GameOverText.setPosition
+		(
+			fereastra->getSize().x / 2.f - GameOverText.getGlobalBounds().width / 2.f,
+			fereastra->getSize().y / 2.f - GameOverText.getGlobalBounds().height / 2.f
+		);
+	}
+}
+
+bool FlappyBirds::updateObstacole()
 {
 	SpawneazaObstacole();
 	for (auto* i : obstacole)
@@ -12,16 +30,17 @@ void FlappyBirds::updateObstacole()
 
 	if(i->getUpperBounds().contains(jucator->getMargini().left+jucator->getMargini().width,jucator->getMargini().top))//left==jucator->getMargini().left+jucator->getMargini().width)
 			{
-				std::cout << "intersectie \n";
-				fereastra->close();
+		return true;
+		fereastra->draw(GameOverText);
 			}
 	if (i->getLowerBounds().contains(jucator->getMargini().left + jucator->getMargini().width, jucator->getMargini().top + jucator->getMargini().width))
 			{
-				std::cout << "intersectie \n";
-				fereastra->close();
+		return true;
+				fereastra->draw(GameOverText);
 			}
 
 	}
+	return false;
 
 }
 void FlappyBirds::updateInput()
@@ -56,6 +75,8 @@ void FlappyBirds::deseneazaFrame()
 		i->deseneazaObstacol(fereastra);
 	}
 	jucator->deseneazaJucator(fereastra);
+	if (updateObstacole())
+		fereastra->draw(GameOverText);
 	fereastra->display();
 }
 
@@ -70,7 +91,9 @@ FlappyBirds::FlappyBirds()
 {
 	jucator->initPawn();
 	initFereastra();
+	initGameOverText();
 }
+
 
 FlappyBirds::~FlappyBirds()
 {
@@ -82,16 +105,23 @@ FlappyBirds::~FlappyBirds()
 
 void FlappyBirds::ruleaza()
 {
-	while (fereastra->isOpen())
-	{
-		updateObstacole();
-		updateColision();
-		updateInput();
-		EventsUpdate();
-		jucator->gravitate();
-		StergeObstacole();
-		deseneazaFrame();
+	while (fereastra->isOpen()) {
+		if (updateObstacole() == false)
+		{
+			updateColision();
+			updateInput();
+			EventsUpdate();
+			jucator->gravitate();
+			StergeObstacole();
+			deseneazaFrame();
+		}
+		else
+		{
+			fereastra->draw(GameOverText);
+			fereastra->display();
+		}
 	}
+	
 }
 
 void FlappyBirds::updateColision()

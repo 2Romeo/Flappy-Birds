@@ -10,8 +10,12 @@ private:
 	float SpawnCoold=SpawnCooldMax;
 	std::vector<Obstacol*> obstacole;
 	DefaultPawn *jucator = new DefaultPawn();
+	sf::Text GameOverText;
+	sf::Font GameOverFont;
 public:
-	void updateObstacole();
+	bool updateObstacole();
+	void initGameOverText();
+	//void updateObstacole();
 	void updateInput();
 	void EventsUpdate();
 	void updateJucator();
