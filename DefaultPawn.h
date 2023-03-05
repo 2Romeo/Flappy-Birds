@@ -5,11 +5,16 @@ class DefaultPawn
 	private:
 		sf::Texture textura;
 		sf::Sprite obiect;
+		float SpaceCooldown;
+		float SpaceCooldownMax;
+		
 
 public:
+	void updateCooldown();
+	bool poateZbura();
 	DefaultPawn();
 	void initPawn();
-	void gravitate();
+	void gravitatie();
 	void updateJucator();
 	void setPozitie(float, float);
 	sf::Vector2f getPoz();

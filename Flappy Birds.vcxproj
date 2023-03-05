@@ -139,15 +139,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameOverState.cpp" />
     <ClCompile Include="DefaultPawn.cpp" />
     <ClCompile Include="FlappyBirds.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Obstacol.cpp" />
+    <ClCompile Include="StartGameState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameOverState.h" />
     <ClInclude Include="DefaultPawn.h" />
     <ClInclude Include="FlappyBirds.h" />
     <ClInclude Include="Obstacol.h" />
+    <ClInclude Include="StartGameState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
