@@ -17,7 +17,7 @@ void GameOverState::initGameOState()
 		GameOverText.setFont(GameOverFont);
 		GameOverText.setCharacterSize(70);
 		GameOverText.setFillColor(sf::Color::Red);
-		GameOverText.setString("GAME OVER Romeo");
+		GameOverText.setString("Game Over Romeo");
 	}
 }
 

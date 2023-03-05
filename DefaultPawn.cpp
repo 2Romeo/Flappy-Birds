@@ -35,19 +35,21 @@ void DefaultPawn::initPawn()
 		obiect.setScale(0.1f, 0.1f);
 	}
 }
+sf::Vector2f interpolare(sf::Vector2f pozA, sf::Vector2f pozB,float factor)
+{
+	return pozA + (pozB - pozA)*factor;
+}
 
 void DefaultPawn::gravitatie()
 {
 	obiect.move(0.f, 1.f);
-//	obiect.setRotation(0);
 }
 
 void DefaultPawn::updateJucator()
 {
 
-//	obiect.setRotation(-45);
-	obiect.move(0.f, -120.f);
-
+	obiect.move(0.f, -70.f);
+	//obiect.setPosition(interpolare(obiect.getPosition(),sf::Vector2f( obiect.getPosition().x + 20.f, obiect.getPosition().y - 120.f),1.f));
 }
 
 void DefaultPawn::setPozitie(float x, float y)
@@ -55,9 +57,9 @@ void DefaultPawn::setPozitie(float x, float y)
 	this->obiect.setPosition(x, y);
 }
 
-sf::Vector2f DefaultPawn::getPoz()
+sf::Vector2i DefaultPawn::getPoz()
 {	
-	return sf::Vector2f(obiect.getPosition().x,obiect.getPosition().y);
+	return (sf::Vector2i)obiect.getPosition();
 }
 
 void DefaultPawn::deseneazaJucator(sf::RenderTarget* fereastra)

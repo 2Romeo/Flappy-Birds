@@ -242,6 +242,7 @@ void FlappyBirds::updateInput()
 void FlappyBirds::updateJucator()
 {
 	jucator->updateJucator();
+	//fereastra->setPosition(jucator->getPoz());
 }
 
 void FlappyBirds::initFereastra()

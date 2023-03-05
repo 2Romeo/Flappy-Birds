@@ -17,7 +17,7 @@ public:
 	void gravitatie();
 	void updateJucator();
 	void setPozitie(float, float);
-	sf::Vector2f getPoz();
+	sf::Vector2i getPoz();
 	void deseneazaJucator(sf::RenderTarget*);
 	const sf::FloatRect& getMargini();
 
